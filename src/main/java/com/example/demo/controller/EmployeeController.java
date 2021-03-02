@@ -6,9 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("api/v1/")
 @RestController
@@ -25,11 +28,11 @@ public class EmployeeController {
     //debug level
     // log.debug()
     //info level
-//    log.info()
+    //log.info()
     //warning level
-//    log.warn()
+    //log.warn()
     //error level
-//    log.error()
+    //log.error()
     @GetMapping("employees")
     public ResponseEntity<List<Employee>> viewAllEmployees(){
         List<Employee> listOfEmployees = employeeService.listEmployees();
@@ -42,5 +45,11 @@ public class EmployeeController {
         employeeService.addEmployees(employee);
         List<Employee> listOfEmployees = employeeService.listEmployees();
         return new ResponseEntity<>(listOfEmployees, HttpStatus.OK);
+    }
+
+    @GetMapping("find_employees/{id}")
+    public ResponseEntity<Employee> findEmployee(@PathVariable long id){
+        Employee employee = employeeService.findOneEmployee(id);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 }
